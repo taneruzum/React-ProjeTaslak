@@ -9,6 +9,7 @@ type LazyWrapperProps = {
   duration?: number;  // animasyon süresi, saniye cinsinden
   lazyLoad?: boolean;
   className?: string;
+  treshold?: number;
 };
 
 const createVariantsMap = (duration: number): Record<string, Variants> => ({
@@ -36,9 +37,10 @@ const LazyWrapper: React.FC<LazyWrapperProps> = ({
   duration = 0.7,
   lazyLoad = false,
   className = "",
+  treshold
 }) => {
   const { ref, isVisible } = useIntersectionObserver<HTMLDivElement>({
-    threshold: 0.2,
+    threshold: treshold ? treshold : 0.5,
   });
 
   const [shouldRender, setShouldRender] = useState(!lazyLoad);
